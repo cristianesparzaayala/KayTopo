@@ -1,0 +1,102 @@
+name: KayTopo Windows CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test-build-install:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install Python dependencies
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: python -m pytest -q
+
+      - name: Build portable KayTopo.exe
+        run: pyinstaller --noconfirm --clean KayTopo.spec
+
+      - name: Smoke-test portable executable
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "dist/KayTopo.exe")) {
+            throw "dist/KayTopo.exe was not generated."
+          }
+          $env:KAYTOPO_SMOKE_TEST = "1"
+          $process = Start-Process -FilePath "dist/KayTopo.exe" -Wait -PassThru
+          if ($process.ExitCode -ne 0) {
+            throw "Portable KayTopo.exe smoke test failed with exit code $($process.ExitCode)."
+          }
+
+      - name: Install Inno Setup compiler
+        shell: pwsh
+        run: choco install innosetup --version=6.7.1 -y --no-progress
+
+      - name: Build Windows installer
+        shell: pwsh
+        run: |
+          ISCC.exe "/DMyAppVersion=0.1.2-alpha" "/DMyVersionInfo=0.1.2.0" "installer/KayTopo.iss"
+          if (-not (Test-Path "dist/KayTopo_Setup_v0.1.2-alpha.exe")) {
+            throw "KayTopo installer was not generated."
+          }
+
+      - name: Install setup silently
+        shell: pwsh
+        run: |
+          $setup = Resolve-Path "dist/KayTopo_Setup_v0.1.2-alpha.exe"
+          $p = Start-Process -FilePath $setup -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART","/SP-","/TASKS=" -Wait -PassThru
+          if ($p.ExitCode -ne 0) {
+            throw "Installer failed with exit code $($p.ExitCode)."
+          }
+          $installed = Join-Path $env:LOCALAPPDATA "Programs\KayTopo\KayTopo.exe"
+          if (-not (Test-Path $installed)) {
+            throw "Installed KayTopo.exe was not found."
+          }
+
+      - name: Smoke-test installed application
+        shell: pwsh
+        run: |
+          $env:KAYTOPO_SMOKE_TEST = "1"
+          $installed = Join-Path $env:LOCALAPPDATA "Programs\KayTopo\KayTopo.exe"
+          $p = Start-Process -FilePath $installed -Wait -PassThru
+          if ($p.ExitCode -ne 0) {
+            throw "Installed KayTopo smoke test failed with exit code $($p.ExitCode)."
+          }
+
+      - name: Uninstall silently and verify removal
+        shell: pwsh
+        run: |
+          $uninstaller = Join-Path $env:LOCALAPPDATA "Programs\KayTopo\unins000.exe"
+          if (-not (Test-Path $uninstaller)) {
+            throw "KayTopo uninstaller was not found."
+          }
+          $p = Start-Process -FilePath $uninstaller -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait -PassThru
+          if ($p.ExitCode -ne 0) {
+            throw "Uninstaller failed with exit code $($p.ExitCode)."
+          }
+          Start-Sleep -Seconds 2
+          $installed = Join-Path $env:LOCALAPPDATA "Programs\KayTopo\KayTopo.exe"
+          if (Test-Path $installed) {
+            throw "KayTopo.exe still exists after uninstall."
+          }
+
+      - name: Upload Windows packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: KayTopo-Windows-Packages
+          path: |
+            dist/KayTopo.exe
+            dist/KayTopo_Setup_v0.1.2-alpha.exe
+          if-no-files-found: error
