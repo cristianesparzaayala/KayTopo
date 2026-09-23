@@ -12,6 +12,46 @@
   © 2026 <strong>Cristian Esparza Ayala</strong> · GNU GPL v3 o posterior
 </p>
 
+<!-- KAYTOPO_SCREENSHOTS_START -->
+## Vista previa
+
+<p align="center">
+  <img src="assets/screenshots/04_vista_previa.png" alt="Vista previa topográfica de KayTopo" width="100%">
+</p>
+
+<p align="center">
+  <strong>Vista previa topográfica</strong><br>
+  <sub>Revisión visual de vértices, poligonal y puntos de relieve antes de exportar.</sub>
+</p>
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img src="assets/screenshots/01_importar_datos.png" alt="Importación de datos en KayTopo" width="100%"><br>
+      <strong>Importación de datos</strong><br>
+      <sub>KML, KMZ, CSV y TXT con lectura inicial de metadatos.</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="assets/screenshots/02_sistema_coordenadas.png" alt="Configuración del sistema de coordenadas en KayTopo" width="100%"><br>
+      <strong>Sistema de coordenadas</strong><br>
+      <sub>Confirmación del CRS de origen y definición de la salida UTM.</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <img src="assets/screenshots/03_elevacion_dem.png" alt="Configuración de elevación DEM en KayTopo" width="100%"><br>
+      <strong>Elevación y DEM</strong><br>
+      <sub>Incorporación opcional de Z e interpolación desde DEM/GeoTIFF.</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="assets/screenshots/05_exportacion.png" alt="Exportación de archivos en KayTopo" width="100%"><br>
+      <strong>Exportación CAD / CivilCAD</strong><br>
+      <sub>Generación de TXT, CSV, DXF y archivo de procedencia.</sub>
+    </td>
+  </tr>
+</table>
+<!-- KAYTOPO_SCREENSHOTS_END -->
+
 ## Descargar KayTopo
 
 La versión pública inicial es **v0.1.2-alpha**. Es una versión funcional de prueba pensada para validación con usuarios reales antes de una versión estable.
