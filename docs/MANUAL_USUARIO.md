@@ -6,6 +6,8 @@
 
 © 2026 Cristian Esparza Ayala
 
+**[Descargar manual oficial en PDF](KayTopo_Manual_Usuario_v0.1.2-alpha.pdf)**
+
 KayTopo es una herramienta de escritorio para convertir y preparar información topográfica de forma local y sin depender de Internet. Su flujo está orientado a llevar coordenadas a una salida UTM, completar elevaciones desde un DEM/GeoTIFF cuando sea necesario y preparar archivos compatibles con flujos AutoCAD/CivilCAD.
 
 > KayTopo no sustituye un levantamiento topográfico, control geodésico ni certificación profesional. La exactitud final depende del CRS/datum declarado y de la calidad de los datos de origen.
@@ -164,5 +166,7 @@ Consulta la carpeta [`examples/`](../examples/) para archivos CSV/TXT listos par
 
 ## Autoría
 
-KayTopo · © 2026 Cristian Esparza Ayala  
+KayTopo · © 2026 Cristian Esparza Ayala
+
+**[Descargar manual oficial en PDF](KayTopo_Manual_Usuario_v0.1.2-alpha.pdf)**  
 Software distribuido bajo GNU GPL v3 o posterior.

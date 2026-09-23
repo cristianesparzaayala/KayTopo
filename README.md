@@ -58,6 +58,7 @@ La versión pública inicial es **v0.1.2-alpha**. Es una versión funcional de p
 
 - **[KayTopo Setup para Windows](https://github.com/cristianesparzaayala/KayTopo/releases/download/v0.1.2-alpha/KayTopo_Setup_v0.1.2-alpha.exe)** — recomendado para la mayoría de usuarios.
 - **[KayTopo Portable para Windows](https://github.com/cristianesparzaayala/KayTopo/releases/download/v0.1.2-alpha/KayTopo_Portable_v0.1.2-alpha.exe)** — un solo ejecutable, sin instalación.
+- **[Manual de usuario PDF](https://github.com/cristianesparzaayala/KayTopo/releases/download/v0.1.2-alpha/KayTopo_Manual_Usuario_v0.1.2-alpha.pdf)** — guía completa de uso, formatos de entrada, DEM y flujo CAD/CivilCAD.
 - **[Documentación y plantillas](https://github.com/cristianesparzaayala/KayTopo/releases/download/v0.1.2-alpha/KayTopo_Documentacion_v0.1.2-alpha.zip)**.
 - **[Ver la Release v0.1.2-alpha](https://github.com/cristianesparzaayala/KayTopo/releases/tag/v0.1.2-alpha)**.
 
@@ -112,7 +113,8 @@ La exactitud final depende del CRS declarado, datum/marco, calidad del archivo d
 
 ## Documentación
 
-- [Manual de usuario](docs/MANUAL_USUARIO.md)
+- [Manual de usuario PDF](docs/KayTopo_Manual_Usuario_v0.1.2-alpha.pdf)
+- [Manual de usuario en Markdown](docs/MANUAL_USUARIO.md)
 - [Plantillas de entrada CSV/TXT](examples/README.md)
 - [Formato de entrada técnico](docs/FORMATO_ENTRADA.md)
 - [Validación](docs/VALIDACION.md)
