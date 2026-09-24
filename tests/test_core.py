@@ -121,6 +121,39 @@ def test_dxf_layers_point_style_and_hidden_authorship(tmp_path: Path):
     assert int(values[4]) == 1
 
 
+def test_dxf_kaycadcivil_metadata_for_relief_and_missing_z(tmp_path: Path):
+    vertices = [
+        TopoPoint("10", 0, 0, x=498000.0, y=2224000.0, z=None, z_source="NONE", kind="VERTEX"),
+        TopoPoint("20", 0, 0, x=498010.0, y=2224010.0, z=101.5, z_source="SURVEY", kind="CONTROL"),
+    ]
+    relief = [
+        TopoPoint("R7", 0, 0, x=498005.0, y=2224005.0, z=100.2, z_source="DEM", kind="RELIEF"),
+    ]
+
+    p = export_dxf(tmp_path / "interop.dxf", vertices, relief=relief, scale=100)
+    doc = ezdxf.readfile(p)
+    points = list(doc.modelspace().query("POINT"))
+    assert len(points) == 3
+
+    payloads = {}
+    for entity in points:
+        values = [tag.value for tag in entity.get_xdata("KAYTOPO")]
+        payloads[str(values[1])] = values
+
+    assert payloads["10"][0] == "POINT_V1"
+    assert payloads["10"][2] == "VERTEX"
+    assert payloads["10"][3] == "NONE"
+    assert int(payloads["10"][4]) == 0
+
+    assert payloads["20"][2] == "CONTROL"
+    assert payloads["20"][3] == "SURVEY"
+    assert int(payloads["20"][4]) == 1
+
+    assert payloads["R7"][2] == "RELIEF"
+    assert payloads["R7"][3] == "DEM"
+    assert int(payloads["R7"][4]) == 1
+
+
 def test_dem_fills_missing_z_and_generates_relief(tmp_path: Path):
     import numpy as np
     import rasterio
