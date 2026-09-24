@@ -107,6 +107,18 @@ def test_dxf_layers_point_style_and_hidden_authorship(tmp_path: Path):
     assert "KAYTOPO_METADATA" in doc.rootdict
     meta = [tag.value for tag in doc.rootdict["KAYTOPO_METADATA"].tags]
     assert any("Cristian Esparza Ayala" in str(v) for v in meta)
+    assert any("KAYTOPO_DXF_V1" in str(v) for v in meta)
+    assert "KAYTOPO" in doc.appids
+
+    point_entities = list(doc.modelspace().query("POINT"))
+    assert len(point_entities) == 3
+    xdata = point_entities[0].get_xdata("KAYTOPO")
+    values = [tag.value for tag in xdata]
+    assert values[0] == "POINT_V1"
+    assert values[1] == "1"
+    assert values[2] == "VERTEX"
+    assert values[3] == "SURVEY"
+    assert int(values[4]) == 1
 
 
 def test_dem_fills_missing_z_and_generates_relief(tmp_path: Path):
