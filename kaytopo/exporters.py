@@ -143,8 +143,12 @@ def export_dxf(
         (1, "KayTopo"),
         (1, COPYRIGHT),
         (1, f"Version {VERSION}"),
+        (1, "Interchange KAYTOPO_DXF_V1"),
         (1, "SPDX-License-Identifier: GPL-3.0-or-later"),
     ])
+
+    if "KAYTOPO" not in doc.appids:
+        doc.appids.add("KAYTOPO")
 
     msp = doc.modelspace()
     if standard_layers:
@@ -175,13 +179,33 @@ def export_dxf(
     for p in vertices:
         x, y, z = p.final_xyz()
         layer = "KTOPO_CONTROL" if standard_layers and p.kind == "CONTROL" else layer_vertices
-        msp.add_point((x, y, z or 0.0), dxfattribs={"layer": layer})
+        point_entity = msp.add_point((x, y, z or 0.0), dxfattribs={"layer": layer})
+        point_entity.set_xdata(
+            "KAYTOPO",
+            [
+                (1000, "POINT_V1"),
+                (1000, str(p.id)),
+                (1000, str(p.kind or "VERTEX").upper()),
+                (1000, str(p.z_source or "NONE").upper()),
+                (1070, 1 if z is not None else 0),
+            ],
+        )
         txt = msp.add_text(str(p.id), height=text_height_m, dxfattribs={"layer": layer_labels})
         txt.dxf.insert = (x + label_offset, y + label_offset, 0.0)
 
     for p in relief:
         x, y, z = p.final_xyz()
-        msp.add_point((x, y, z or 0.0), dxfattribs={"layer": layer_relief})
+        point_entity = msp.add_point((x, y, z or 0.0), dxfattribs={"layer": layer_relief})
+        point_entity.set_xdata(
+            "KAYTOPO",
+            [
+                (1000, "POINT_V1"),
+                (1000, str(p.id)),
+                (1000, str(p.kind or "RELIEF").upper()),
+                (1000, str(p.z_source or "NONE").upper()),
+                (1070, 1 if z is not None else 0),
+            ],
+        )
 
     doc.saveas(path)
     _inject_dxf_comments(path)
