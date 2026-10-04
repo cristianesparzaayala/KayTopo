@@ -115,6 +115,7 @@ jobs:
           $assetPaths = @(
             "dist/KayTopo_Setup_v$env:APP_VERSION.exe",
             "dist/KayTopo_Portable_v$env:APP_VERSION.exe",
+            "dist/KayTopo_Manual_Usuario_v$env:APP_VERSION.pdf",
             "dist/KayTopo_Documentacion_v$env:APP_VERSION.zip"
           )
           $hashLines = foreach ($path in $assetPaths) {
@@ -132,6 +133,7 @@ jobs:
           $assets = @(
             "dist/KayTopo_Setup_v$env:APP_VERSION.exe",
             "dist/KayTopo_Portable_v$env:APP_VERSION.exe",
+            "dist/KayTopo_Manual_Usuario_v$env:APP_VERSION.pdf",
             "dist/KayTopo_Documentacion_v$env:APP_VERSION.zip",
             "dist/SHA256SUMS.txt"
           )

@@ -12,6 +12,8 @@ Convención recomendada:
 Reglas:
 
 - Usa punto decimal.
+- Las plantillas CSV y TXT oficiales usan coma `,` como separador, por ser un formato muy común en archivos de puntos topográficos.
+- KayTopo también puede leer punto y coma, tabulación o espacios cuando el archivo de origen los utiliza.
 - No uses separadores de miles.
 - Los metadatos comienzan con `# CLAVE=VALOR`.
 - Si omites metadatos, KayTopo puede sugerir una interpretación, pero debes confirmar el sistema en la interfaz.

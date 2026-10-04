@@ -249,3 +249,19 @@ def test_runtime_smoke_test():
     from kaytopo.app import _frozen_smoke_test
 
     _frozen_smoke_test()
+
+
+def test_txt_comma_delimited_survey_points(tmp_path: Path):
+    p = tmp_path / "puntos.txt"
+    p.write_text(
+        "1,512026.909,2224277.023,2374\n"
+        "2,512061.084,2224269.100,2373\n",
+        encoding="utf-8",
+    )
+    r = read_delimited(p)
+    assert r.metadata.columns == ["ID", "X", "Y", "Z"]
+    assert len(r.points) == 2
+    assert r.points[0].id == "1"
+    assert r.points[0].x_original == pytest.approx(512026.909)
+    assert r.points[0].y_original == pytest.approx(2224277.023)
+    assert r.points[0].z_original == pytest.approx(2374.0)
