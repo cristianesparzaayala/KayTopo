@@ -60,7 +60,6 @@ La versión pública inicial es **v0.1.2-alpha**. Es una versión funcional de p
 - **[KayTopo Portable para Windows](https://github.com/cristianesparzaayala/KayTopo/releases/download/v0.1.2-alpha/KayTopo_Portable_v0.1.2-alpha.exe)** — un solo ejecutable, sin instalación.
 - **[Manual de usuario PDF](https://github.com/cristianesparzaayala/KayTopo/releases/download/v0.1.2-alpha/KayTopo_Manual_Usuario_v0.1.2-alpha.pdf)** — guía completa de uso, formatos de entrada, DEM y flujo CAD/CivilCAD.
 - **[Documentación y plantillas](https://github.com/cristianesparzaayala/KayTopo/releases/download/v0.1.2-alpha/KayTopo_Documentacion_v0.1.2-alpha.zip)**.
-- **[Ver la Release v0.1.2-alpha](https://github.com/cristianesparzaayala/KayTopo/releases/tag/v0.1.2-alpha)**.
 
 > KayTopo está en fase **alpha**. Verifica siempre CRS, datum/marco, zona UTM y calidad de las fuentes antes de utilizar resultados en trabajo profesional.
 

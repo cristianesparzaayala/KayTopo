@@ -93,7 +93,24 @@ jobs:
         shell: pwsh
         run: |
           Copy-Item "dist/KayTopo.exe" "dist/KayTopo_Portable_v$env:APP_VERSION.exe"
-          Compress-Archive -Path "docs","examples","README.md","LICENSE" -DestinationPath "dist/KayTopo_Documentacion_v$env:APP_VERSION.zip" -Force
+          Copy-Item "docs/KayTopo_Manual_Usuario_v$env:APP_VERSION.pdf" "dist/KayTopo_Manual_Usuario_v$env:APP_VERSION.pdf"
+
+          $packageRoot = "dist/KayTopo_Documentacion_v$env:APP_VERSION"
+
+          if (Test-Path $packageRoot) {
+            Remove-Item $packageRoot -Recurse -Force
+          }
+
+          New-Item -ItemType Directory -Path "$packageRoot/CSV" -Force | Out-Null
+          New-Item -ItemType Directory -Path "$packageRoot/TXT" -Force | Out-Null
+          New-Item -ItemType Directory -Path "$packageRoot/Manual" -Force | Out-Null
+
+          Copy-Item "examples/CSV/*.csv" "$packageRoot/CSV/"
+          Copy-Item "examples/TXT/*.txt" "$packageRoot/TXT/"
+          Copy-Item "docs/KayTopo_Manual_Usuario_v$env:APP_VERSION.pdf" "$packageRoot/Manual/"
+
+          Compress-Archive -Path "$packageRoot/*" -DestinationPath "dist/KayTopo_Documentacion_v$env:APP_VERSION.zip" -Force
+          Remove-Item $packageRoot -Recurse -Force
 
           $assetPaths = @(
             "dist/KayTopo_Setup_v$env:APP_VERSION.exe",
